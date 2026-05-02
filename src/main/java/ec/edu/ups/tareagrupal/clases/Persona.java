@@ -101,6 +101,11 @@ public class Persona {
         return "Persona{" + "cedula=" + cedula + ", edad=" + edad + ", nombre=" + nombre + ", apellido=" + apellido + ", direccion=" + direccion + ", estadoVivo=" + estadoVivo + ", tieneDiscapacidad=" + tieneDiscapacidad + ", genero=" + genero + '}';
     }
     
+    public boolean  esMayorEdad(){
+        return edad>=18;
+    }
     
-    
+    public String obtenerNombreCompleto(){
+        return nombre + " " + apellido;
+    }
 }

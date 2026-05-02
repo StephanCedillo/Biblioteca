@@ -18,19 +18,31 @@ public class Libro {
     private int numeroPaginas;
     private String idioma;
     private boolean siestadoDisponibilidad;
+    private double costoLibro;
 
     public Libro() {
     }
-    
-    public Libro(String ISBN, String nombre, String genero, boolean sirestriccionEdad, int numeroPaginas, String idioma, boolean siestadoDisponibilidad) {
+
+    public Libro(String ISBN, Autor autor, String nombre, String genero, boolean sirestriccionEdad, int numeroPaginas, String idioma, boolean siestadoDisponibilidad, double costoLibro) {
         this.ISBN = ISBN;
+        this.autor= autor;
         this.nombre = nombre;
         this.genero = genero;
         this.sirestriccionEdad = sirestriccionEdad;
         this.numeroPaginas = numeroPaginas;
         this.idioma = idioma;
         this.siestadoDisponibilidad = siestadoDisponibilidad;
+        this.costoLibro = costoLibro;
     }
+
+    public double getCostoLibro() {
+        return costoLibro;
+    }
+
+    public void setCostoLibro(double costoLibro) {
+        this.costoLibro = costoLibro;
+    }
+   
 
     public String getISBN() {
         return ISBN;
@@ -101,6 +113,26 @@ public class Libro {
         return "Libro{" + "ISBN=" + ISBN + ", autor=" + autor + ", nombre=" + nombre + ", genero=" + genero + ", sirestriccionEdad=" + sirestriccionEdad + ", numeroPaginas=" + numeroPaginas + ", idioma=" + idioma + ", siestadoDisponibilidad=" + siestadoDisponibilidad + '}';
     }
     
+    public void prestar() {
+        if (siestadoDisponibilidad) {
+            this.siestadoDisponibilidad= false;
+            System.out.println("El libro '" + nombre + "' ha sido prestado.");
+        } else {
+            System.out.println("El libro no está disponible para préstamo.");
+        }
+    }
     
+    public void devolver() {
+        this.siestadoDisponibilidad = true;
+        System.out.println("El libro '" + nombre + "' ha sido devuelto y está disponible.");
+    }
+    
+    public boolean estaDisponible() {
+        return this.siestadoDisponibilidad;
+    }
+    
+    public boolean tieneRestriccionEdad() {
+        return this.sirestriccionEdad;
+    }
     
 }

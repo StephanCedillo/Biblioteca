@@ -18,9 +18,11 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String email, String contrasena) {
+    public Usuario(String email, String contrasena, Persona datosPersonales, Membresia membresia) {
         this.email = email;
         this.contrasena = contrasena;
+        this.datosPersonales = datosPersonales;
+        this.membresia = membresia;
     }
 
     public String getEmail() {
@@ -58,6 +60,20 @@ public class Usuario {
     @Override
     public String toString() {
         return "Usuario{" + "email=" + email + ", contrasena=" + contrasena + ", datosPersonales=" + datosPersonales + ", membresia=" + membresia + '}';
+    }
+    
+    public void devolverLibro(){
+        
+    }
+    public void renovarMembresia(){
+        membresia.renovar();
+}
+    public int obtenerDescuento(){
+        int descuento = membresia.calcularDescuento();
+        if(datosPersonales.isTieneDiscapacidad()){
+            descuento +=20;
+        }
+        return descuento;
     }
     
     
