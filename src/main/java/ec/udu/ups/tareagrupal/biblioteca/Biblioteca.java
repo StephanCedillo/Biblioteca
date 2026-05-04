@@ -72,7 +72,7 @@ public class Biblioteca {
 
                         usuarios.add(new Usuario(email, contraseña, persona, membresia));
                         System.out.println("Desea ingresar otro usuario? ( S/N) ");
-                        continuar = leer.nextLine();
+                        continuar = leer.next();
                     } while (continuar.equalsIgnoreCase("S"));
 
                     break;
@@ -107,7 +107,7 @@ public class Biblioteca {
                         autor.agregarLibro(libro);
                         libros.add(libro);
                         System.out.println("Desea ingresar otro libro? ( S/N) ");
-                        continuar = leer.nextLine();
+                        continuar = leer.next();
                     } while (continuar.equalsIgnoreCase("S"));
 
                     break;
@@ -170,7 +170,7 @@ public class Biblioteca {
 
                                 ganancias += registro.getFactura().calcularTotal();
                                 System.out.println("Desea ingresar otro libro? ( S/N) ");
-                                continuar = leer.nextLine();
+                                continuar = leer.next();
 
                             }
                         } while (continuar.equalsIgnoreCase("S"));

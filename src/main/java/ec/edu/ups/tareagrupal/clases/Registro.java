@@ -24,7 +24,7 @@ public class Registro {
     private Factura factura = new Factura();
  
 
-    int contadorId = 0;
+    private static int contadorId = 0;
 
     public Registro() {
          id = contadorId++;
@@ -33,6 +33,9 @@ public class Registro {
     public Registro(Usuario usuario,Libro libro ,boolean estado) {
         id = contadorId++;
         this.estado = estado;
+        this.usuario = usuario;
+        this.libro = libro;
+        generarFactura();
    
     }
 
@@ -138,7 +141,7 @@ public class Registro {
         return hoy.isAfter(fechaDevolucion) && estado;
     }
 
-    public Factura generarFactura(Libro libro, Usuario usuario) {
+    public Factura generarFactura() {
         int descuentoAplicado = usuario.obtenerDescuento();
         double impuestos = 12.0;
 
