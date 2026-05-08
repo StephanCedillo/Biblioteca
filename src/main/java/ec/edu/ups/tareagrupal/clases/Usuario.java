@@ -8,23 +8,26 @@ package ec.edu.ups.tareagrupal.clases;
  *
  * @author stephancedillo
  */
-public class Usuario {
+public class Usuario extends Persona {
     
     private String email;
     private String contrasena;
-    private Persona datosPersonales = new Persona();
     private Membresia membresia = new Membresia() ;
 
     public Usuario() {
     }
 
-    public Usuario(String email, String contrasena, Persona datosPersonales, Membresia membresia) {
+   
+
+    public Usuario(String email, String contrasena, String cedula, int edad, String nombre, String apellido, String direccion, boolean estadoVivo, boolean tieneDiscapacidad, String genero,Membresia membresia) {
+        super(cedula, edad, nombre, apellido, direccion, estadoVivo, tieneDiscapacidad, genero);
         this.email = email;
         this.contrasena = contrasena;
-        this.datosPersonales = datosPersonales;
-        this.membresia = membresia;
+        this.membresia= membresia;
     }
-
+    
+    
+    
     public String getEmail() {
         return email;
     }
@@ -41,14 +44,7 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
-    public Persona getDatosPersonales() {
-        return datosPersonales;
-    }
-
-    public void setDatosPersonales(Persona datosPersonales) {
-        this.datosPersonales = datosPersonales;
-    }
-
+  
     public Membresia getMembresia() {
         return membresia;
     }
@@ -59,22 +55,16 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" + "email=" + email + ", contrasena=" + contrasena + ", datosPersonales=" + datosPersonales + ", membresia=" + membresia + '}';
+         String resultado = super.toString();
+        return "Usuario{" + "email=" + email + ", contrasena=" + contrasena + ",  "+ resultado + " membresia=" + membresia + '}';
+    }
+    public void agregarMembresia(){
     }
     
-    public void devolverLibro(){
-        
-    }
     public void renovarMembresia(){
         membresia.renovar();
 }
-    public int obtenerDescuento(){
-        int descuento = membresia.calcularDescuento();
-        if(datosPersonales.isTieneDiscapacidad()){
-            descuento +=20;
-        }
-        return descuento;
-    }
+   
     
     
     
