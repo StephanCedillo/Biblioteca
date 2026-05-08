@@ -24,12 +24,12 @@ public class Biblioteca {
 
         ArrayList<Usuario> usuarios = new ArrayList<>();
         ArrayList<Libro> libros = new ArrayList<>();
-        ArrayList<Prestamo> registros = new ArrayList<>();
+        ArrayList<Prestamo> prestamos = new ArrayList<>();
         ArrayList<Autor> autores = new ArrayList<>();
 
         // ======================
-// AUTORES
-// ======================
+        // AUTORES
+        // ======================
         Autor autor1 = new Autor(
                 "0102030405",
                 45,
@@ -55,9 +55,9 @@ public class Biblioteca {
         autores.add(autor1);
         autores.add(autor2);
 
-// ======================
-// LIBROS
-// ======================
+        // ======================
+        // LIBROS
+        // ======================
         Libro libro1 = new Libro(
                 "9781234567890",
                 autor1,
@@ -85,13 +85,13 @@ public class Biblioteca {
         libros.add(libro1);
         libros.add(libro2);
 
-// Agregar libros a los autores
+        // Agregar libros a los autores
         autor1.agregarLibro(libro1);
         autor2.agregarLibro(libro2);
 
-// ======================
-// USUARIOS
-// ======================
+        // ======================
+        // USUARIOS
+        // ======================
         Usuario usuario1 = new Usuario(
                 "juan@gmail.com",
                 "1234",
@@ -135,14 +135,13 @@ public class Biblioteca {
             System.out.println("4. Registrar devolución");
             System.out.println("5. Mostrar usuarios");
             System.out.println("6. Mostrar libros");
-            System.out.println("7. Mostrar historial");
-            System.out.println("8. Mostrar factura");
-
-            System.out.println("10. Renovar membresía");
-            System.out.println("11. Buscar Libro");
-            System.out.println("12. Buscar Usuario");
-            System.out.println("13. Buscar Registro");
-            System.out.println("14. Buscar Autor");
+            System.out.println("7. Mostrar prestamos");
+            
+            System.out.println("8. Renovar membresía");
+            System.out.println("9. Buscar Libro");
+            System.out.println("10. Buscar Usuario");
+            System.out.println("11. Buscar Prestamo");
+            System.out.println("12. Buscar Autor");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
 
@@ -196,7 +195,7 @@ public class Biblioteca {
                         int numeroPaginas = leer.nextInt();
                         System.out.println("Ingresa su idioma: ");
                         String idioma = leer.next();
-                        System.out.println("Ingresa su costoº:  ");
+                        System.out.println("Ingresa su costo:  ");
                         double costoLibro = leer.nextDouble();
 
                         Libro libro = new Libro(ISBN, autor, nombre, genero, sirestriccionEdad, numeroPaginas, idioma, true, costoLibro);
@@ -211,7 +210,7 @@ public class Biblioteca {
 
                 case 3:
                     continuar = "";
-                    Prestamo registro = null;
+                    Prestamo prestamo = null;
                     System.out.println("\n--- REGISTRAR PRÉSTAMO ---");
                     int cantidadDisponibilidadLibros = buscarDisponibilidadLibros(libros);
                     if (!usuarios.isEmpty() && !libros.isEmpty() && cantidadDisponibilidadLibros > 0) {
@@ -268,8 +267,8 @@ public class Biblioteca {
 
                                     requisito = true;
 
-                                    registro = new Prestamo(usuario, true);
-                                    registro.agregarLibro(libro);
+                                    prestamo = new Prestamo(usuario, true);
+                                    prestamo.agregarLibro(libro);
                                     cont++;
 
                                     System.out.println("Desea ingresar otro libro? ( S/N) ");
@@ -281,7 +280,7 @@ public class Biblioteca {
                                 }
                             }
                         } while (continuar.equalsIgnoreCase("S"));
-                        registros.add(registro);
+                        prestamos.add(prestamo);
 
                     } else {
                         if (usuarios.isEmpty() || libros.isEmpty()) {
@@ -297,9 +296,9 @@ public class Biblioteca {
                 case 4:
                     System.out.println("\n--- REGISTRAR DEVOLUCIÓN ---");
 
-                    Prestamo registroEncontrado = buscarRegistros(registros);
+                    Prestamo prestamoEncontrado = buscarPrestamos(prestamos);
 
-                    registroEncontrado.registrarDevolucion();
+                    prestamoEncontrado.registrarDevolucion();
 
                     System.out.println("Usted realizo la devolucion del libro ");
 
@@ -317,7 +316,7 @@ public class Biblioteca {
 
                 case 7:
                     System.out.println("\n--- HISTORIAL ---");
-                    imprimirRegistros(registros);
+                    imprimirPrestamos(prestamos);
                     break;
 
                 case 8:
@@ -326,7 +325,6 @@ public class Biblioteca {
                     String usuarioBusqueda = leer.next();
                     Usuario usuario = buscarUsuario(usuarios, usuarioBusqueda);
                     usuario.renovarMembresia();
-                    // renovarMembresia()
                     break;
 
                 case 9:
@@ -337,7 +335,7 @@ public class Biblioteca {
                     Libro libroEncontrado1 = buscarLibro(libros, isbnBusqueda);
 
                     if (libroEncontrado1 == null) {
-                        System.out.println("No se ha encontrado el usuario buscado");
+                        System.out.println("No se ha encontrado el libro buscado");
 
                     } else {
                         System.out.println(libroEncontrado1);
@@ -359,25 +357,25 @@ public class Biblioteca {
 
                     break;
                 case 11:
-                    System.out.println("\n--- BUSCAR  ---");
+                    System.out.println("\n--- BUSCAR PRESTAMO ---");
 
-                    Prestamo registroEncontrado1 = buscarRegistros(registros);
+                    Prestamo prestamoEncontrado1 = buscarPrestamos(prestamos);
 
-                    if (registroEncontrado1 == null) {
-                        System.out.println("No se ha encontrado el usuario buscado");
+                    if (prestamoEncontrado1 == null) {
+                        System.out.println("No se ha encontrado el prestamo buscado");
 
                     } else {
-                        System.out.println(registroEncontrado1);
+                        System.out.println(prestamoEncontrado1);
                     }
 
                     break;
                 case 12:
                     System.out.println("\n--- BUSCAR AUTOR ---");
                     System.out.println("Ingresa el nombre del autor ");
-                    String autorBusqueda = leer.next();
-                    Autor autorBuscado = buscarAutor(autores, autorBusqueda);
+                    String autorBusqueda1 = leer.next();
+                    Autor autorBuscado = buscarAutor(autores, autorBusqueda1);
                     if (autorBuscado == null) {
-                        System.out.println("No se ha encontrado el usuario buscado");
+                        System.out.println("No se ha encontrado el autor buscado");
 
                     } else {
                         System.out.println(autorBuscado);
@@ -514,40 +512,40 @@ public class Biblioteca {
         return null;
     }
 
-    public static Prestamo buscarRegistroId(ArrayList<Prestamo> registros, int id) {
+    public static Prestamo buscarPrestamoId(ArrayList<Prestamo> prestamos, int id) {
 
-        for (Prestamo registro : registros) {
+        for (Prestamo prestamo : prestamos) {
 
-            if (registro.getId() == id) {
+            if (prestamo.getId() == id) {
 
-                return registro;
+                return prestamo;
             }
         }
 
         return null;
     }
 
-    public static Prestamo buscarRegistroUsuario(ArrayList<Prestamo> registros, String cedula) {
+    public static Prestamo buscarPrestamoUsuario(ArrayList<Prestamo> prestamos, String cedula) {
 
-        for (Prestamo registro : registros) {
+        for (Prestamo prestamo : prestamos) {
 
-            if (registro.getUsuario().getCedula().equalsIgnoreCase(cedula)) {
+            if (prestamo.getUsuario().getCedula().equalsIgnoreCase(cedula)) {
 
-                return registro;
+                return prestamo;
             }
         }
 
         return null;
     }
 
-    public static Prestamo buscarRegistroLibro(ArrayList<Prestamo> registros, String ISBN) {
+    public static Prestamo buscarPrestamoLibro(ArrayList<Prestamo> prestamos, String ISBN) {
 
-        for (Prestamo registro : registros) {
-            List<Libro> libros = registro.getLibro();
+        for (Prestamo prestamo : prestamos) {
+            List<Libro> libros = prestamo.getLibro();
             for (Libro libro : libros) {
                 if (libro.getISBN().equalsIgnoreCase(ISBN)) {
 
-                    return registro;
+                    return prestamo;
                 }
 
             }
@@ -582,36 +580,36 @@ public class Biblioteca {
         }
     }
 
-    public static void imprimirRegistros(ArrayList<Prestamo> registros) {
-        for (Prestamo registro : registros) {
-            System.out.println(registro);
+    public static void imprimirPrestamos(ArrayList<Prestamo> prestamos) {
+        for (Prestamo prestamo : prestamos) {
+            System.out.println(prestamo);
         }
     }
 
-    public static Prestamo buscarRegistros(ArrayList<Prestamo> registros) {
+    public static Prestamo buscarPrestamos(ArrayList<Prestamo> prestamos) {
         Scanner leer = new Scanner(System.in);
         System.out.println("\n========= MENU DE BUSQUEDA =========");
-        System.out.println("1. Id del registro");
+        System.out.println("1. Id del prestamo");
         System.out.println("2. Cedula Usuario");
         System.out.println("3. ISBN libro");
         int opcionMenuBusqueda1 = leer.nextInt();
-        Prestamo registroBuscado1 = null;
+        Prestamo prestamoBuscado1 = null;
 
         switch (opcionMenuBusqueda1) {
             case 1:
-                System.out.println("Ingresa el id de su registro ");
-                int idRegistroBuscado = leer.nextInt();
-                registroBuscado1 = buscarRegistroId(registros, idRegistroBuscado);
+                System.out.println("Ingresa el id de su prestamo ");
+                int idPrestamoBuscado = leer.nextInt();
+                prestamoBuscado1 = buscarPrestamoId(prestamos, idPrestamoBuscado);
                 break;
             case 2:
                 System.out.println("Ingresa la cedula del usuario");
-                String cedulaRegistroBuscado = leer.next();
-                registroBuscado1 = buscarRegistroUsuario(registros, cedulaRegistroBuscado);
+                String cedulaPrestamoBuscado = leer.next();
+                prestamoBuscado1 = buscarPrestamoUsuario(prestamos, cedulaPrestamoBuscado);
                 break;
             case 3:
                 System.out.println("Ingresa el ISBN del libro");
-                String ISBNRegistroBuscado = leer.next();
-                registroBuscado1 = buscarRegistroLibro(registros, ISBNRegistroBuscado);
+                String ISBNPrestamoBuscado = leer.next();
+                prestamoBuscado1 = buscarPrestamoLibro(prestamos, ISBNPrestamoBuscado);
                 break;
             default:
                 System.out.println("Usted ingreso los datos incorrectos");
@@ -620,6 +618,6 @@ public class Biblioteca {
 
         }
 
-        return registroBuscado1;
+        return prestamoBuscado1;
     }
 }
