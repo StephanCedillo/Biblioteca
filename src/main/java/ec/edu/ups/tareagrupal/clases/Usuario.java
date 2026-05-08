@@ -58,7 +58,11 @@ public class Usuario extends Persona {
     @Override
     public String toString() {
         String resultado = super.toString();
-        return "Usuario{" + "email=" + email + ", contrasena=" + contrasena + ",  " + resultado + " membresia=" + membresia + '}';
+        return "-Usuario-" +"/n"+ 
+            "email=" + email + "/n"+
+            "contrasena=" + contrasena +"/n"+
+             " " + resultado + " membresia=" + membresia + "/n";
+
     }
 
     public void agregarMembresia() {
@@ -71,12 +75,26 @@ public class Usuario extends Persona {
             System.out.println("Usted quiere tener membresia?(S/N) ");
             boolean resultado = pedirSiNo();
             if (resultado) {
+                System.out.println("--Menu-"+"\n"+"1.Corporativa"+"\n"+"2.Academica"+"\n"+"3.Estudiantil");
                 System.out.println("Ingresa su tipo de membresia: ");
-                String tipo = leer.next();
-
-                LocalDate fechaInicio = pedirFechaLocalDate();
-
-                LocalDate fechaVencimiento = pedirFechaLocalDate();
+                int numero = leer.nextInt();
+                
+                String tipo="2";
+                
+                switch(numero){
+                    case 1:
+                        tipo="Corporativa";
+                        break;
+                    case 2:
+                        tipo="Academica";
+                        break;
+                    case 3:
+                         tipo="Estudiantil";
+                        break;
+                    default:
+                        System.out.println("Usted ha ingresado mal los datos");
+                }
+                LocalDate fechaInicio = LocalDate.now();
 
                 membresia = new Membresia(tipo, fechaInicio);
 

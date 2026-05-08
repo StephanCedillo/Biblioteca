@@ -4,7 +4,8 @@
  */
 package ec.edu.ups.tareagrupal.clases;
 
-import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
 import java.time.LocalDate;
 
 /**
@@ -15,7 +16,7 @@ public class Prestamo {
 
     private int id;
     private Usuario usuario;
-    private Libro libro;
+    private List<Libro> libros;
     private boolean estado;
 
     private LocalDate fechaPedido = LocalDate.now();
@@ -27,16 +28,16 @@ public class Prestamo {
     private static int contadorId = 0;
 
     public Prestamo() {
-         id = contadorId++;
+        id = contadorId++;
+        libros = new ArrayList<>();
     }
 
-    public Prestamo(Usuario usuario,Libro libro ,boolean estado) {
+    public Prestamo(Usuario usuario, boolean estado) {
         id = contadorId++;
         this.estado = estado;
         this.usuario = usuario;
-        this.libro = libro;
-   
-   
+        libros = new ArrayList<>();
+
     }
 
     public int getId() {
@@ -63,12 +64,12 @@ public class Prestamo {
         this.usuario = usuario;
     }
 
-    public Libro getLibro() {
-        return libro;
+    public List<Libro> getLibro() {
+        return libros;
     }
 
     public void setLibro(Libro libro) {
-        this.libro = libro;
+        this.libros = libros;
     }
 
     public boolean isEstado() {
@@ -87,16 +88,25 @@ public class Prestamo {
         this.fechaDevolucion = fechaDevolucion;
     }
 
-  
-
-    
-
     @Override
     public String toString() {
-        return "Registro{" + "id=" + id + ", fechaPedido=" + fechaPedido + ", usuario=" + usuario + ", libro=" + libro + ", estado=" + estado + ", fechaDevolucion=" + fechaDevolucion +  '}';
+        String resultado= ""; 
+        resultado +="---Registro---"+"\n" 
+                + "id=" + id +"\n" +
+                "fechaPedido=" + fechaPedido + "\n" +
+                "usuario=" + usuario + 
+                "libro=";
+                
+          for(Libro libro: libros){
+            resultado+= libro.toString() + "\n";
+        }
+        resultado+="estado=" + estado +"\n" +
+                "fechaDevolucion=" + fechaDevolucion ;
+        return resultado;
     }
 
-    public void registrarPrestamo() {
+    public boolean registrarPrestamo(Libro libro) {
+        boolean aux;
 
         if (libro.estaDisponible()) {
 
@@ -106,20 +116,26 @@ public class Prestamo {
 
             this.estado = true;
 
-            this.libro.prestar();
+            libro.prestar();
 
             System.out.println("Préstamo registrado con éxito.");
             System.out.println("Fecha de devolución: " + fechaDevolucion);
+            aux = true;
 
         } else {
+            aux = false;
 
             System.out.println("El libro no se puede prestar porque no está disponible.");
         }
+        return aux;
     }
 
     public void registrarDevolucion() {
         this.estado = false;
-        this.libro.devolver();
+        for (Libro libro : libros) {
+            libro.devolver();
+        }
+
         System.out.println("Devolución registrada.");
     }
 
@@ -135,6 +151,11 @@ public class Prestamo {
         return hoy.isAfter(fechaDevolucion) && estado;
     }
 
-    
+    public void agregarLibro(Libro libro) {
+        boolean siPoderAgregar = registrarPrestamo(libro);
+        if (siPoderAgregar) {
+            libros.add(libro);
+        }
+    }
 
 }

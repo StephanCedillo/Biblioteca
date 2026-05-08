@@ -12,6 +12,7 @@ import ec.edu.ups.tareagrupal.clases.Autor;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -91,8 +92,6 @@ public class Biblioteca {
 // ======================
 // USUARIOS
 // ======================
-       
-
         Usuario usuario1 = new Usuario(
                 "juan@gmail.com",
                 "1234",
@@ -104,7 +103,6 @@ public class Biblioteca {
                 true,
                 false,
                 "Masculino"
-            
         );
 
         Usuario usuario2 = new Usuario(
@@ -118,7 +116,6 @@ public class Biblioteca {
                 true,
                 true,
                 "Femenino"
-
         );
 
         usuarios.add(usuario1);
@@ -164,8 +161,7 @@ public class Biblioteca {
                         String contraseña = leer.next();
 
                         Persona datos = pedirDatosPersonales(true);
-                       
-                     
+
                         Usuario usuario = new Usuario(email, contraseña, datos.getCedula(), datos.getEdad(), datos.getNombre(), datos.getApellido(), datos.getDireccion(), datos.isEstadoVivo(), datos.isTieneDiscapacidad(), datos.getGenero());
                         usuario.agregarMembresia();
                         usuarios.add(usuario);
@@ -176,6 +172,7 @@ public class Biblioteca {
                     break;
 
                 case 2:
+
                     System.out.println("\n--- INGRESAR LIBRO ---");
                     do {
                         System.out.println("Ingresa su ISBN ");
@@ -214,64 +211,78 @@ public class Biblioteca {
 
                 case 3:
                     continuar = "";
+                    Prestamo registro = null;
                     System.out.println("\n--- REGISTRAR PRÉSTAMO ---");
                     int cantidadDisponibilidadLibros = buscarDisponibilidadLibros(libros);
                     if (!usuarios.isEmpty() && !libros.isEmpty() && cantidadDisponibilidadLibros > 0) {
+
+                        boolean requisito = false;
+
+                        Usuario usuario = null;
+
+                        while (usuario == null) {
+                            System.out.println("Ingresa la cedula de su usuario ");
+                            String usuarioBusqueda = leer.next();
+                            usuario = buscarUsuario(usuarios, usuarioBusqueda);
+                            if (usuario == null) {
+                                System.out.println("Usuario no encontrado");
+                                continue;
+                            }
+
+                        }
+                        int cont = 0;
+
                         do {
-                            boolean requisito = false;
+                            requisito = false;
+
                             while (!requisito) {
 
-                                Libro libro = null;
-                                while (libro == null) {
-                                    System.out.println("Ingresa el ISBN de su libro ");
-                                    String libroBusqueda = leer.next();
-                                    libro = buscarLibro(libros, libroBusqueda);
-                                    if (libro == null) {
-                                        System.out.println("Libro no encontrado");
-                                        continue;
-                                    }
-                                    boolean disponibilidad = libro.isSiestadoDisponibilidad();
-
-                                    while (!disponibilidad) {
-                                        System.out.println("Libro no disponible, busque otro: ");
+                                if (cont < usuario.getMembresia().calcularCantidadLibros()) {
+                                    Libro libro = null;
+                                    while (libro == null) {
                                         System.out.println("Ingresa el ISBN de su libro ");
-                                        libroBusqueda = leer.next();
+                                        String libroBusqueda = leer.next();
                                         libro = buscarLibro(libros, libroBusqueda);
-                                        disponibilidad = libro.isSiestadoDisponibilidad();
+                                        if (libro == null) {
+                                            System.out.println("Libro no encontrado");
+                                            continue;
+                                        }
+                                        boolean disponibilidad = libro.isSiestadoDisponibilidad();
+
+                                        while (!disponibilidad) {
+                                            System.out.println("Libro no disponible, busque otro: ");
+                                            System.out.println("Ingresa el ISBN de su libro ");
+                                            libroBusqueda = leer.next();
+                                            libro = buscarLibro(libros, libroBusqueda);
+                                            disponibilidad = libro.isSiestadoDisponibilidad();
+                                        }
+
                                     }
 
-                                }
+                                    boolean esParaMayoresEdad = libro.isSirestriccionEdad();
 
-                                boolean esParaMayoresEdad = libro.isSirestriccionEdad();
-                                Usuario usuario = null;
-
-                                while (usuario == null) {
-                                    System.out.println("Ingresa la cedula de su usuario ");
-                                    String usuarioBusqueda = leer.next();
-                                    usuario = buscarUsuario(usuarios, usuarioBusqueda);
-                                    if (usuario == null) {
-                                        System.out.println("Usuario no encontrado");
+                                    if (esParaMayoresEdad && usuario.getEdad() < 18) {
+                                        System.out.println("Usted no tiene la edad permitida para este libro");
                                         continue;
                                     }
 
+                                    requisito = true;
+
+                                    registro = new Prestamo(usuario, true);
+                                    registro.agregarLibro(libro);
+                                    cont++;
+
+                                    System.out.println("Desea ingresar otro libro? ( S/N) ");
+                                    continuar = leer.next();
+                                } else {
+                                    continuar = "N";
+                                    requisito = true;
+                                    System.out.println("Usted no tiene permitido tener mas libros ");
                                 }
-
-                                if (esParaMayoresEdad && usuario.getEdad() < 18) {
-                                    System.out.println("Usted no tiene la edad permitida para este libro");
-                                    continue;
-                                }
-
-                                requisito = true;
-
-                                libro.setSiestadoDisponibilidad(false);
-                                Prestamo registro = new Prestamo(usuario, libro, true);
-                                registros.add(registro);
-
-                                System.out.println("Desea ingresar otro libro? ( S/N) ");
-                                continuar = leer.next();
-
                             }
                         } while (continuar.equalsIgnoreCase("S"));
+                        registros.add(registro);
+
                     } else {
                         if (usuarios.isEmpty() || libros.isEmpty()) {
                             System.out.println("No hay libros o usuarios registrados, primero realice eso");
@@ -287,7 +298,8 @@ public class Biblioteca {
                     System.out.println("\n--- REGISTRAR DEVOLUCIÓN ---");
 
                     Prestamo registroEncontrado = buscarRegistros(registros);
-                    registroEncontrado.getLibro().setSiestadoDisponibilidad(true);
+
+                    registroEncontrado.registrarDevolucion();
 
                     System.out.println("Usted realizo la devolucion del libro ");
 
@@ -347,7 +359,7 @@ public class Biblioteca {
 
                     break;
                 case 11:
-                    System.out.println("\n--- BUSCAR REGISTRO ---");
+                    System.out.println("\n--- BUSCAR  ---");
 
                     Prestamo registroEncontrado1 = buscarRegistros(registros);
 
@@ -373,11 +385,6 @@ public class Biblioteca {
 
                     break;
 
-                /*
-                     System.out.println("11. Buscar Libro");
-            System.out.println("12. Buscar Usuario");
-            System.out.println("13. Buscar Registro");
-            System.out.println("13. Buscar Autor");*/
                 case 0:
                     System.out.println("\nSaliendo del sistema...");
                     break;
@@ -426,7 +433,6 @@ public class Biblioteca {
 
         return new Persona(cedula, edad, nombre, apellido, direccion, estadoVivo, tieneDiscapacidad, genero);
     }
-
 
     public static boolean pedirSiNo() {
 
@@ -537,11 +543,15 @@ public class Biblioteca {
     public static Prestamo buscarRegistroLibro(ArrayList<Prestamo> registros, String ISBN) {
 
         for (Prestamo registro : registros) {
+            List<Libro> libros = registro.getLibro();
+            for (Libro libro : libros) {
+                if (libro.getISBN().equalsIgnoreCase(ISBN)) {
 
-            if (registro.getLibro().getISBN().equalsIgnoreCase(ISBN)) {
+                    return registro;
+                }
 
-                return registro;
             }
+
         }
 
         return null;

@@ -9,9 +9,9 @@ package ec.edu.ups.tareagrupal.clases;
  * @author stephancedillo
  */
 public class Libro {
-    
+
     private String ISBN;
-    private Autor autor= new Autor();
+    private Autor autor = new Autor();
     private String nombre;
     private String genero;
     private boolean sirestriccionEdad;
@@ -25,7 +25,7 @@ public class Libro {
 
     public Libro(String ISBN, Autor autor, String nombre, String genero, boolean sirestriccionEdad, int numeroPaginas, String idioma, boolean siestadoDisponibilidad, double costoLibro) {
         this.ISBN = ISBN;
-        this.autor= autor;
+        this.autor = autor;
         this.nombre = nombre;
         this.genero = genero;
         this.sirestriccionEdad = sirestriccionEdad;
@@ -42,7 +42,6 @@ public class Libro {
     public void setCostoLibro(double costoLibro) {
         this.costoLibro = costoLibro;
     }
-   
 
     public String getISBN() {
         return ISBN;
@@ -110,29 +109,38 @@ public class Libro {
 
     @Override
     public String toString() {
-        return "Libro{" + "ISBN=" + ISBN + ", autor=" + (autor != null ? autor.getNombre() : "N/A") + ", nombre=" + nombre + ", genero=" + genero + ", sirestriccionEdad=" + sirestriccionEdad + ", numeroPaginas=" + numeroPaginas + ", idioma=" + idioma + ", siestadoDisponibilidad=" + siestadoDisponibilidad + '}';
+        return "-Libro-" + "/n"
+                + "ISBN=" + ISBN + "/n"
+                + "autor=" + (autor != null ? autor.getNombre() : "N/A") + "/n"
+                + "nombre=" + nombre + "/n"
+                + "genero=" + genero + "/n"
+                + "sirestriccionEdad=" + sirestriccionEdad + "/n"
+                + "numeroPaginas=" + numeroPaginas + "/n"
+                + "idioma=" + idioma + "/n"
+                + "siestadoDisponibilidad=" + siestadoDisponibilidad + "/n";
+
     }
-    
+
     public void prestar() {
         if (siestadoDisponibilidad) {
-            this.siestadoDisponibilidad= false;
+            this.siestadoDisponibilidad = false;
             System.out.println("El libro '" + nombre + "' ha sido prestado.");
         } else {
             System.out.println("El libro no está disponible para préstamo.");
         }
     }
-    
+
     public void devolver() {
         this.siestadoDisponibilidad = true;
         System.out.println("El libro '" + nombre + "' ha sido devuelto y está disponible.");
     }
-    
+
     public boolean estaDisponible() {
         return this.siestadoDisponibilidad;
     }
-    
+
     public boolean tieneRestriccionEdad() {
         return this.sirestriccionEdad;
     }
-    
+
 }

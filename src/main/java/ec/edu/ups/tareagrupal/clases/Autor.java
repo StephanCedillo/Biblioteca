@@ -10,30 +10,23 @@ import java.util.ArrayList;
  *
  * @author stephancedillo
  */
-public class Autor extends Persona{
+public class Autor extends Persona {
 
-    
-    private ArrayList<Libro> libros = new ArrayList<>();
+    private ArrayList<Libro> libros;
 
-     public Autor() {
-        
+    public Autor() {
+        libros = new ArrayList<>();
+
     }
-    
-     public Autor(String cedula, int edad, String nombre, String apellido, String direccion, boolean estadoVivo, boolean tieneDiscapacidad, String genero) {
+
+    public Autor(String cedula, int edad, String nombre, String apellido, String direccion, boolean estadoVivo, boolean tieneDiscapacidad, String genero) {
         super(cedula, edad, nombre, apellido, direccion, estadoVivo, tieneDiscapacidad, genero);
-    }
-
-    public ArrayList<Libro> getLibros() {
-        return libros;
-    }
-
-    public void setLibros(ArrayList<Libro> libros) {
-        this.libros = libros;
+        libros = new ArrayList<>();
     }
 
     @Override
     public String toString() {
-        return "Autor{" + "datoPersona="  + ", libros=" + libros + '}';
+        return "Autor{" + "datoPersona=" + ", libros=" + libros + '}';
     }
 
     public void agregarLibro(Libro libro) {
@@ -50,7 +43,7 @@ public class Autor extends Persona{
             return "El autor no tiene libros registrados.";
         }
 
-        String lista = "Libros de " +  getNombre() + " " + getApellido() + ":\n";
+        String lista = "Libros de " + getNombre() + " " + getApellido() + ":\n";
         for (Libro libro : libros) {
             lista += "- " + libro.estaDisponible() + " (ISBN: " + libro.toString() + ")\n";
         }

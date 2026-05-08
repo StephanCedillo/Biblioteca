@@ -56,6 +56,7 @@ public class Membresia {
     }
     
     public int calcularCantidadLibros(){
+        System.out.println("tipo = " + tipoMembresia);
         if(tipoMembresia.equalsIgnoreCase("Corporativa")){
             return 10;
         }else if(tipoMembresia.equalsIgnoreCase("Academica")){
