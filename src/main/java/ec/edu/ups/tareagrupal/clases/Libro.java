@@ -110,7 +110,7 @@ public class Libro {
 
     @Override
     public String toString() {
-        return "Libro{" + "ISBN=" + ISBN + ", autor=" + autor + ", nombre=" + nombre + ", genero=" + genero + ", sirestriccionEdad=" + sirestriccionEdad + ", numeroPaginas=" + numeroPaginas + ", idioma=" + idioma + ", siestadoDisponibilidad=" + siestadoDisponibilidad + '}';
+        return "Libro{" + "ISBN=" + ISBN + ", autor=" + (autor != null ? autor.getNombre() : "N/A") + ", nombre=" + nombre + ", genero=" + genero + ", sirestriccionEdad=" + sirestriccionEdad + ", numeroPaginas=" + numeroPaginas + ", idioma=" + idioma + ", siestadoDisponibilidad=" + siestadoDisponibilidad + '}';
     }
     
     public void prestar() {

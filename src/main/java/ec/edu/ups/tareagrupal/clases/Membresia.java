@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package ec.edu.ups.tareagrupal.clases;
 import java.time.LocalDate;
 /**
@@ -15,16 +12,22 @@ public class Membresia {
     LocalDate fechaVencimiento;
     LocalDate hoy = LocalDate.now(); 
     public Membresia() {
+        this.tipoMembresia="Normal";
+        this.fechaInicio=LocalDate.now();
+        renovar();
+        
     }
 
-    public Membresia(String tipoMembresia, LocalDate fechaInicio, LocalDate fechaVencimiento) {
+    public Membresia(String tipoMembresia, LocalDate fechaInicio) {
         this.tipoMembresia = tipoMembresia;
-        this.fechaInicio = fechaInicio;
-        this.fechaVencimiento = fechaVencimiento;
+        this.fechaInicio = hoy;
+        renovar();
+
     }
 
     public String getTipoMembresia() {
         return tipoMembresia;
+        
     }
 
     public void setTipoMembresia(String tipoMembresia) {
@@ -52,15 +55,17 @@ public class Membresia {
         return "Membresia{" + "tipoMembresia=" + tipoMembresia + ", fechaInicio=" + fechaInicio + ", fechaVencimiento=" + fechaVencimiento + '}';
     }
     
-    public int calcularDescuento(){
+    public int calcularCantidadLibros(){
         if(tipoMembresia.equalsIgnoreCase("Corporativa")){
-            return 25;
+            return 10;
         }else if(tipoMembresia.equalsIgnoreCase("Academica")){
-            return 15;
+            return 5;
         }else if(tipoMembresia.equalsIgnoreCase("Estudiantil")){
-            return 20;
+            return 3;
+        } else if(tipoMembresia.equalsIgnoreCase("Especial")){
+            return 3;
         }else{
-            return 0;
+            return 1;
         }
     }
     public boolean estaVigente(){
@@ -76,6 +81,8 @@ public class Membresia {
         int diasRestantes = fechaVencimiento.getDayOfMonth() - fechaInicio.getDayOfMonth();
         return "Los meses restantes son : " +  mesesRestantes + " y los dias faltantes : " + diasRestantes + " ";
     } 
+    
+    
     
     
 }

@@ -11,7 +11,7 @@ import java.time.LocalDate;
  *
  * @author stephancedillo
  */
-public class Registro {
+public class Prestamo {
 
     private int id;
     private Usuario usuario;
@@ -21,21 +21,21 @@ public class Registro {
     private LocalDate fechaPedido = LocalDate.now();
     private LocalDate fechaDevolucion = fechaPedido.plusMonths(1);
     ;
-    private Factura factura = new Factura();
+
  
 
     private static int contadorId = 0;
 
-    public Registro() {
+    public Prestamo() {
          id = contadorId++;
     }
 
-    public Registro(Usuario usuario,Libro libro ,boolean estado) {
+    public Prestamo(Usuario usuario,Libro libro ,boolean estado) {
         id = contadorId++;
         this.estado = estado;
         this.usuario = usuario;
         this.libro = libro;
-        generarFactura();
+   
    
     }
 
@@ -87,19 +87,13 @@ public class Registro {
         this.fechaDevolucion = fechaDevolucion;
     }
 
-    public Factura getFactura() {
-        return factura;
-    }
-
-    public void setFactura(Factura factura) {
-        this.factura = factura;
-    }
+  
 
     
 
     @Override
     public String toString() {
-        return "Registro{" + "id=" + id + ", fechaPedido=" + fechaPedido + ", usuario=" + usuario + ", libro=" + libro + ", estado=" + estado + ", fechaDevolucion=" + fechaDevolucion + ", factura=" + factura+ '}';
+        return "Registro{" + "id=" + id + ", fechaPedido=" + fechaPedido + ", usuario=" + usuario + ", libro=" + libro + ", estado=" + estado + ", fechaDevolucion=" + fechaDevolucion +  '}';
     }
 
     public void registrarPrestamo() {
@@ -141,17 +135,6 @@ public class Registro {
         return hoy.isAfter(fechaDevolucion) && estado;
     }
 
-    public Factura generarFactura() {
-        int descuentoAplicado = usuario.obtenerDescuento();
-        double impuestos = 12.0;
-
-        Factura facturaCreada = new Factura(
-                libro.getCostoLibro(),
-                impuestos,
-                descuentoAplicado
-        );
-
-        return facturaCreada;
-    }
+    
 
 }
