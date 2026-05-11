@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package ec.edu.ups.tareagrupal.clases;
 
 import static ec.udu.ups.tareagrupal.biblioteca.Biblioteca.pedirFechaLocalDate;
@@ -30,7 +27,7 @@ public class Usuario extends Persona {
         this.email = email;
         this.contrasena = contrasena;
         this.membresia = membresia;
-        membresia = new Membresia();
+        membresia = new Membresia(); 
     }
 
     public String getEmail() {
@@ -60,10 +57,10 @@ public class Usuario extends Persona {
     @Override
     public String toString() {
         String resultado = super.toString();
-        return "-Usuario-" +"/n"+ 
-            "email=" + email + "/n"+
-            "contrasena=" + contrasena +"/n"+
-             " " + resultado + " membresia=" + membresia + "/n";
+        return "-Usuario-" +"\n"+ 
+            "email=" + email + "\n"+
+            "contrasena=" + contrasena +"\n"+
+             " " + resultado + " membresia=" + membresia + "\n";
 
     }
 
@@ -71,7 +68,7 @@ public class Usuario extends Persona {
         Scanner leer = new Scanner(System.in);
 
         if (isTieneDiscapacidad() || getEdad() > 60) {
-            membresia = new Membresia("Especial", LocalDate.now());
+            membresia = new Membresia("Especial");
         } else {
             System.out.println("\n--- INGRESAR DATOS DE MEMBRESIA ---");
             System.out.println("Usted quiere tener membresia?(S/N) ");
@@ -98,7 +95,7 @@ public class Usuario extends Persona {
                 }
                 LocalDate fechaInicio = LocalDate.now();
 
-                membresia = new Membresia(tipo, fechaInicio);
+                membresia = new Membresia(tipo);
 
             } else {
                 membresia = new Membresia();

@@ -24,12 +24,12 @@ public class Prestamo {
     private static int contadorId = 0;
 
     public Prestamo() {
-        id = contadorId++;
+        id = contadorId++; // Esta linea automatiza el nuevo id cada que se crea
         libros = new ArrayList<>();
     }
 
     public Prestamo(Usuario usuario, boolean estado) {
-        id = contadorId++;
+        id = contadorId++;// Esta linea automatiza el nuevo id cada que se crea
         this.estado = estado;
         this.usuario = usuario;
         libros = new ArrayList<>();
@@ -100,6 +100,12 @@ public class Prestamo {
                 "fechaDevolucion=" + fechaDevolucion ;
         return resultado;
     }
+     public void agregarLibro(Libro libro) {
+        boolean siPoderAgregar = registrarPrestamo(libro);
+        if (siPoderAgregar) {
+            libros.add(libro);
+        }
+    }
 
     public boolean registrarPrestamo(Libro libro) {
         boolean aux;
@@ -125,7 +131,6 @@ public class Prestamo {
         }
         return aux;
     }
-
     public void registrarDevolucion() {
         this.estado = false;
         for (Libro libro : libros) {
@@ -134,24 +139,11 @@ public class Prestamo {
 
         System.out.println("Devolución registrada.");
     }
-
-    // El afeter compara la fecha de debolucion
-    //si la fecha es superior devuelve true y 
-    // el and && hace que solo retorne si la fecha true 
-    //osea que es superior a la de devoluvion y el estado true osea aun 
-    //esta en las manos del usuario 
     public boolean estaAtrasado() {
-
         LocalDate hoy = LocalDate.now();
-
         return hoy.isAfter(fechaDevolucion) && estado;
     }
 
-    public void agregarLibro(Libro libro) {
-        boolean siPoderAgregar = registrarPrestamo(libro);
-        if (siPoderAgregar) {
-            libros.add(libro);
-        }
-    }
+   
 
 }

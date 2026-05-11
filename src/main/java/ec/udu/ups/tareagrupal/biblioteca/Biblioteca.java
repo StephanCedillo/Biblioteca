@@ -27,10 +27,6 @@ public class Biblioteca {
         ArrayList<Autor> autores = new ArrayList<>();
         ArrayList<Prestamo> prestamos = new ArrayList<>();
         
-
-        // ======================
-        // AUTORES
-        // ======================
         Autor autor1 = new Autor(
                 "0102030405",
                 45,
@@ -56,43 +52,36 @@ public class Biblioteca {
         autores.add(autor1);
         autores.add(autor2);
 
-        // ======================
-        // LIBROS
-        // ======================
         Libro libro1 = new Libro(
                 "9781234567890",
-                autor1,
                 "Cien Años de Soledad",
                 "Novela",
                 false,
                 471,
                 "Español",
-                true,
-                25.50
+                true
+
         );
 
         Libro libro2 = new Libro(
                 "9789876543210",
-                autor2,
                 "La Casa de los Espíritus",
                 "Drama",
                 true,
                 390,
                 "Español",
-                true,
-                30.00
+                true
+
         );
+        libro1.agregarAutor(autor1);
+        libro2.agregarAutor(autor2);
 
         libros.add(libro1);
         libros.add(libro2);
 
-        // Agregar libros a los autores
         autor1.agregarLibro(libro1);
         autor2.agregarLibro(libro2);
 
-        // ======================
-        // USUARIOS
-        // ======================
         Usuario usuario1 = new Usuario(
                 "juan@gmail.com",
                 "1234",
@@ -137,7 +126,6 @@ public class Biblioteca {
             System.out.println("5. Mostrar usuarios");
             System.out.println("6. Mostrar libros");
             System.out.println("7. Mostrar prestamos");
-            
             System.out.println("8. Renovar membresía");
             System.out.println("9. Buscar Libro");
             System.out.println("10. Buscar Usuario");
@@ -162,15 +150,15 @@ public class Biblioteca {
 
                         Persona datos = pedirDatosPersonales(true);
 
-                        Usuario usuario = new Usuario(email, contraseña, datos.getCedula(), datos.getEdad(), datos.getNombre(), datos.getApellido(), datos.getDireccion(), datos.isEstadoVivo(), datos.isTieneDiscapacidad(), datos.getGenero());
+                        Usuario usuario = new Usuario(email, contraseña, datos.getCedula(), datos.getEdad(),
+                                datos.getNombre(), datos.getApellido(), datos.getDireccion(), datos.isEstadoVivo(),
+                                datos.isTieneDiscapacidad(), datos.getGenero());
                         usuario.agregarMembresia();
                         usuarios.add(usuario);
                         System.out.println("Desea ingresar otro usuario? ( S/N) ");
                         continuar = leer.next();
                     } while (continuar.equalsIgnoreCase("S"));
-
                     break;
-
                 case 2:
 
                     System.out.println("\n--- INGRESAR LIBRO ---");
@@ -196,11 +184,11 @@ public class Biblioteca {
                         int numeroPaginas = leer.nextInt();
                         System.out.println("Ingresa su idioma: ");
                         String idioma = leer.next();
-                        System.out.println("Ingresa su costo:  ");
-                        double costoLibro = leer.nextDouble();
+                        
 
-                        Libro libro = new Libro(ISBN, autor, nombre, genero, sirestriccionEdad, numeroPaginas, idioma, true, costoLibro);
-
+                        Libro libro = new Libro(ISBN, nombre, genero, sirestriccionEdad, numeroPaginas, idioma, true);
+                        libro.agregarAutor(autor);
+                        
                         autor.agregarLibro(libro);
                         libros.add(libro);
                         System.out.println("Desea ingresar otro libro? ( S/N) ");
@@ -231,6 +219,7 @@ public class Biblioteca {
 
                         }
                         int cont = 0;
+                        prestamo = new Prestamo(usuario, true);
 
                         do {
                             requisito = false;
@@ -268,7 +257,7 @@ public class Biblioteca {
 
                                     requisito = true;
 
-                                    prestamo = new Prestamo(usuario, true);
+                                    
                                     prestamo.agregarLibro(libro);
                                     cont++;
 
@@ -296,30 +285,23 @@ public class Biblioteca {
 
                 case 4:
                     System.out.println("\n--- REGISTRAR DEVOLUCIÓN ---");
-
                     Prestamo prestamoEncontrado = buscarPrestamos(prestamos);
-
                     prestamoEncontrado.registrarDevolucion();
-
                     System.out.println("Usted realizo la devolucion del libro ");
-
                     break;
 
                 case 5:
                     System.out.println("\n--- LISTA DE USUARIOS ---");
                     imprimirUsuarios(usuarios);
                     break;
-
                 case 6:
                     System.out.println("\n--- LISTA DE LIBROS ---");
                     imprimirLibros(libros);
                     break;
-
                 case 7:
                     System.out.println("\n--- HISTORIAL ---");
                     imprimirPrestamos(prestamos);
                     break;
-
                 case 8:
                     System.out.println("\n--- RENOVAR MEMBRESÍA ---");
                     System.out.println("Ingresa la cedula de su usuario ");
@@ -327,7 +309,6 @@ public class Biblioteca {
                     Usuario usuario = buscarUsuario(usuarios, usuarioBusqueda);
                     usuario.renovarMembresia();
                     break;
-
                 case 9:
                     System.out.println("\n--- BUSCAR LIBRO ---");
                     System.out.println("Ingresa el ISBN del libro ");
@@ -394,7 +375,6 @@ public class Biblioteca {
             }
 
         } while (opcion != 0);
-
         leer.close();
     }
 
@@ -473,12 +453,12 @@ public class Biblioteca {
 
     }
 
-    public static Autor buscarAutor(ArrayList<Autor> autores, String nombre) {
+    public static Autor buscarAutor(ArrayList<Autor> autores, String cedula) {
 
         for (Autor autor : autores) {
 
             if (autor.getCedula()
-                    .equalsIgnoreCase(nombre)) {
+                    .equalsIgnoreCase(cedula)) {
 
                 return autor;
             }

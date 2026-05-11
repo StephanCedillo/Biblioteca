@@ -96,15 +96,15 @@ public class Persona {
 
    @Override
     public String toString() {
-        return "--DATOS DE LA PERSONA--" +"/n" +
-                "cedula=" + cedula + "/n" +
-                ", edad=" + edad + "/n" +
-                ", nombre=" + nombre +"/n" +
-                ", apellido=" + apellido + "/n" +
-                ", direccion=" + direccion + "/n" +
-                ", estadoVivo=" + estadoVivo + "/n" +
-                ", tieneDiscapacidad=" + tieneDiscapacidad +"/n" +
-                ", genero=" + genero + "/n" ;
+        return "--DATOS DE LA PERSONA--" +"\n" +
+                "cedula=" + cedula + "\n" +
+                ", edad=" + edad + "\n" +
+                ", nombre=" + nombre +"\n" +
+                ", apellido=" + apellido + "\n" +
+                ", direccion=" + direccion + "\n" +
+                ", estadoVivo=" + estadoVivo + "\n" +
+                ", tieneDiscapacidad=" + tieneDiscapacidad +"\n" +
+                ", genero=" + genero + "\n" ;
     }
     
     public boolean  esMayorEdad(){

@@ -18,30 +18,23 @@ public class Libro {
     private int numeroPaginas;
     private String idioma;
     private boolean siestadoDisponibilidad;
-    private double costoLibro;
+
 
     public Libro() {
     }
 
-    public Libro(String ISBN, Autor autor, String nombre, String genero, boolean sirestriccionEdad, int numeroPaginas, String idioma, boolean siestadoDisponibilidad, double costoLibro) {
+    public Libro(String ISBN, String nombre, String genero, boolean sirestriccionEdad, int numeroPaginas, String idioma, boolean siestadoDisponibilidad) {
         this.ISBN = ISBN;
-        this.autor = autor;
         this.nombre = nombre;
         this.genero = genero;
         this.sirestriccionEdad = sirestriccionEdad;
         this.numeroPaginas = numeroPaginas;
         this.idioma = idioma;
         this.siestadoDisponibilidad = siestadoDisponibilidad;
-        this.costoLibro = costoLibro;
+        this.autor = null;
     }
 
-    public double getCostoLibro() {
-        return costoLibro;
-    }
-
-    public void setCostoLibro(double costoLibro) {
-        this.costoLibro = costoLibro;
-    }
+   
 
     public String getISBN() {
         return ISBN;
@@ -51,13 +44,6 @@ public class Libro {
         this.ISBN = ISBN;
     }
 
-    public Autor getAutor() {
-        return autor;
-    }
-
-    public void setAutor(Autor autor) {
-        this.autor = autor;
-    }
 
     public String getNombre() {
         return nombre;
@@ -109,15 +95,15 @@ public class Libro {
 
     @Override
     public String toString() {
-        return "-Libro-" + "/n"
-                + "ISBN=" + ISBN + "/n"
-                + "autor=" + (autor != null ? autor.getNombre() : "N/A") + "/n"
-                + "nombre=" + nombre + "/n"
-                + "genero=" + genero + "/n"
-                + "sirestriccionEdad=" + sirestriccionEdad + "/n"
-                + "numeroPaginas=" + numeroPaginas + "/n"
-                + "idioma=" + idioma + "/n"
-                + "siestadoDisponibilidad=" + siestadoDisponibilidad + "/n";
+        return "-Libro-" + "\n"
+                + "ISBN=" + ISBN + "\n"
+                + "autor=" + (autor != null ? autor.getNombre() : "N/A") + "\n"
+                + "nombre=" + nombre + "\n"
+                + "genero=" + genero + "\n"
+                + "sirestriccionEdad=" + sirestriccionEdad + "\n"
+                + "numeroPaginas=" + numeroPaginas + "\n"
+                + "idioma=" + idioma + "\n"
+                + "siestadoDisponibilidad=" + siestadoDisponibilidad + "\n";
 
     }
 
@@ -141,6 +127,9 @@ public class Libro {
 
     public boolean tieneRestriccionEdad() {
         return this.sirestriccionEdad;
+    }
+    public void agregarAutor(Autor autor){
+        this.autor = autor;
     }
 
 }

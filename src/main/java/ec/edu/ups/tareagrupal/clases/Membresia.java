@@ -18,7 +18,7 @@ public class Membresia {
         
     }
 
-    public Membresia(String tipoMembresia, LocalDate fechaInicio) {
+    public Membresia(String tipoMembresia) {
         this.tipoMembresia = tipoMembresia;
         this.fechaInicio = hoy;
         renovar();
