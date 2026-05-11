@@ -19,14 +19,20 @@ public class Autor extends Persona {
 
     }
 
-    public Autor(String cedula, int edad, String nombre, String apellido, String direccion, boolean estadoVivo, boolean tieneDiscapacidad, String genero) {
+    public Autor(String cedula, int edad, String nombre, String apellido, 
+            String direccion, boolean estadoVivo, boolean tieneDiscapacidad,
+            String genero) {
         super(cedula, edad, nombre, apellido, direccion, estadoVivo, tieneDiscapacidad, genero);
         libros = new ArrayList<>();
     }
 
     @Override
     public String toString() {
-        return "Autor{" + "datoPersona=" + ", libros=" + libros + '}';
+         String resultado = super.toString(); 
+         for (Libro libro : libros) {
+            resultado += "- " + libro.estaDisponible() +"\n"+ " (Nombre: " + libro.getNombre() + ")\n";
+        }
+        return resultado;
     }
 
     public void agregarLibro(Libro libro) {
@@ -35,9 +41,6 @@ public class Autor extends Persona {
         }
     }
 
-    //isEmpty verifica que en la lista haya almenos un caracter y debuelve un booleano 
-    //true si no existen caracteres osea que no tiene libros, y false si existe por lo 
-    //menos un caracter :p
     public String mostrarLibrosPublicados() {
         if (libros.isEmpty()) {
             return "El autor no tiene libros registrados.";
@@ -50,8 +53,6 @@ public class Autor extends Persona {
         return lista;
     }
 
-    //el .size cuanta cuantos elemento estan dentro de un Arraylist
-    //devuelve un int de osea de la cantidad de elementos pues
     public int contarLibros() {
         return this.libros.size();
     }

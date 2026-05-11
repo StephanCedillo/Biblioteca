@@ -1,6 +1,5 @@
 
 package ec.edu.ups.tareagrupal.clases;
-
 /**
  *
  * @author stephancedillo
@@ -18,7 +17,9 @@ public class Persona {
     public Persona() {
     }
     
-    public Persona(String cedula, int edad, String nombre, String apellido, String direccion, boolean estadoVivo, boolean tieneDiscapacidad, String genero) {
+    public Persona(String cedula, int edad, String nombre, 
+            String apellido, String direccion, boolean estadoVivo,
+            boolean tieneDiscapacidad, String genero) {
         this.cedula = cedula;
         this.edad = edad;
         this.nombre = nombre;
@@ -93,9 +94,17 @@ public class Persona {
         this.genero = genero;
     }
 
-    @Override
+   @Override
     public String toString() {
-        return "Persona{" + "cedula=" + cedula + ", edad=" + edad + ", nombre=" + nombre + ", apellido=" + apellido + ", direccion=" + direccion + ", estadoVivo=" + estadoVivo + ", tieneDiscapacidad=" + tieneDiscapacidad + ", genero=" + genero + '}';
+        return "--DATOS DE LA PERSONA--" +"/n" +
+                "cedula=" + cedula + "/n" +
+                ", edad=" + edad + "/n" +
+                ", nombre=" + nombre +"/n" +
+                ", apellido=" + apellido + "/n" +
+                ", direccion=" + direccion + "/n" +
+                ", estadoVivo=" + estadoVivo + "/n" +
+                ", tieneDiscapacidad=" + tieneDiscapacidad +"/n" +
+                ", genero=" + genero + "/n" ;
     }
     
     public boolean  esMayorEdad(){

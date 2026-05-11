@@ -23,7 +23,9 @@ public class Usuario extends Persona {
         membresia = new Membresia();
     }
 
-    public Usuario(String email, String contrasena, String cedula, int edad, String nombre, String apellido, String direccion, boolean estadoVivo, boolean tieneDiscapacidad, String genero) {
+    public Usuario(String email, String contrasena, String cedula,
+            int edad, String nombre, String apellido, String direccion,
+            boolean estadoVivo, boolean tieneDiscapacidad, String genero) {
         super(cedula, edad, nombre, apellido, direccion, estadoVivo, tieneDiscapacidad, genero);
         this.email = email;
         this.contrasena = contrasena;

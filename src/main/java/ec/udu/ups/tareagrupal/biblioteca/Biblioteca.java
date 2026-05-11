@@ -24,8 +24,9 @@ public class Biblioteca {
 
         ArrayList<Usuario> usuarios = new ArrayList<>();
         ArrayList<Libro> libros = new ArrayList<>();
-        ArrayList<Prestamo> prestamos = new ArrayList<>();
         ArrayList<Autor> autores = new ArrayList<>();
+        ArrayList<Prestamo> prestamos = new ArrayList<>();
+        
 
         // ======================
         // AUTORES

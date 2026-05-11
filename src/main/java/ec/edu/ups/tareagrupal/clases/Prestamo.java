@@ -15,16 +15,12 @@ import java.time.LocalDate;
 public class Prestamo {
 
     private int id;
-    private Usuario usuario;
-    private List<Libro> libros;
+    private Usuario usuario;// Asociación
+    private List<Libro> libros;// Asociación
     private boolean estado;
 
-    private LocalDate fechaPedido = LocalDate.now();
+    private LocalDate fechaPedido = LocalDate.now(); 
     private LocalDate fechaDevolucion = fechaPedido.plusMonths(1);
-    ;
-
- 
-
     private static int contadorId = 0;
 
     public Prestamo() {
